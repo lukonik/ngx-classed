@@ -1,13 +1,32 @@
-<!-- <h1 [class]="test()">test</h1> -->
-
-<button [class]="buttonClasses()">HELLO</button>
-
+<button
+  appButton
+  size="xl"
+  [variant]="variant()"
+  [size]="size()"
+  [icon]="icon()"
+  [loading]="loading()"
+>
+  This is button
+</button>
 <select [(ngModel)]="variant">
   <option>default</option>
   <option>secondary</option>
   <option>destructive</option>
 </select>
 
+<select [(ngModel)]="size">
+  <option>sm</option>
+  <option>md</option>
+  <option>destructive</option>
+</select>
+<input type="checkbox" [(ngModel)]="icon" /> ICON
+<input type="checkbox" [(ngModel)]="loading" /> LOADING
+
+<!--
+<button [class]="buttonClasses()">HELLO</button>
+
+
+
 <input type="checkbox" [(ngModel)]="size" />
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->

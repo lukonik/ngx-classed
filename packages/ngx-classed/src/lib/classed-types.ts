@@ -6,3 +6,10 @@ export type ClassVariantType<TKey extends string = string> = Record<
 > & { default?: ClassValueTypeStrict };
 
 export type SourceType<T> = () => T | undefined;
+
+export interface MultiVariantSingleType {
+  classes: ClassValueTypeStrict;
+  variants: Record<string, any>;
+}
+
+export type MultiVariantType = Array<MultiVariantSingleType>;

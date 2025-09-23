@@ -1,12 +1,8 @@
-import { ClassValueType, SourceType } from '../classed-types';
+import { ClassValueType } from '../classed-types';
 import { BaseResolver } from './base-resolver';
 
 export class IifResolver extends BaseResolver<boolean> {
-  constructor(
-    source: SourceType<boolean>,
-    private trueClasses: ClassValueType,
-    private falseClasses?: ClassValueType
-  ) {
+  constructor() {
     super(source);
   }
 
