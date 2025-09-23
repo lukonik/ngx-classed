@@ -9,7 +9,10 @@ export class Classed {
   private _resolvers = new Set<BaseResolver<unknown>>();
   constructor(private _classes?: ClassValueType) {}
 
-  var(variants: ClassVariantType, source: SourceType<string>) {
+  var<T extends string>(
+    variants: ClassVariantType<T>,
+    source: SourceType<string>
+  ) {
     this._resolvers.add(new VariantResolver(variants, source));
     return this;
   }

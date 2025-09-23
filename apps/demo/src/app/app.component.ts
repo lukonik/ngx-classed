@@ -2,6 +2,20 @@ import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { classed } from 'ngx-classed';
+
+type VARIANT_TYPES =
+  | 'default'
+  | 'secondary'
+  | 'destructive'
+  | 'outline'
+  | 'ghost'
+  | 'link'
+  | 'icon'
+  | 'with-icon'
+  | 'loading';
+
+type SIZE_TYPES = 'sm' | 'md' | 'lg' | 'xl' | 'none';
+
 @Component({
   standalone: true,
   imports: [RouterModule, FormsModule],
