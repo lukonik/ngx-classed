@@ -1,2 +1,13 @@
-<app-nx-welcome></app-nx-welcome>
+<!-- <h1 [class]="test()">test</h1> -->
+
+<button [class]="buttonClasses()">HELLO</button>
+
+<select [(ngModel)]="variant">
+  <option>default</option>
+  <option>secondary</option>
+  <option>destructive</option>
+</select>
+
+<input type="checkbox" [(ngModel)]="size" />
+
 <router-outlet></router-outlet>
