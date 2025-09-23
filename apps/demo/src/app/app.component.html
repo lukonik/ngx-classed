@@ -1,8 +1,11 @@
-<h1 [class]="test()">test</h1>
+<!-- <h1 [class]="test()">test</h1> -->
+
+<button [class]="buttonClasses()">HELLO</button>
 
 <select [(ngModel)]="variant">
-  <option value="primary">Primary</option>
-  <option value="danger">Danger</option>
+  <option>default</option>
+  <option>secondary</option>
+  <option>destructive</option>
 </select>
 
 <input type="checkbox" [(ngModel)]="size" />

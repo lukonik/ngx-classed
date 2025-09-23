@@ -1,2 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+@theme static {
+  --color-background: white;
+  --color-foreground: #030712;
+  --color-primary: #2563eb;
+  --color-primary-foreground: white;
+
+  --color-inverse: #1f2937;
+  --color-inverse-foreground: white;
+
+  --color-secondary: #4b5563;
+  --color-secondary-foreground: white;
+
+  --color-accent: #f3f4f6;
+  --color-accent-foreground: #111827;
+
+  --color-danger: #dc2626;
+  --color-danger-foreground: white;
+
+  --color-warning: #ea580c;
+  --color-warning-foreground: white;
+
+  --color-success: #16a34a;
+  --color-success-foreground: white;
+
+  --color-disabled: #f9fafb;
+  --color-disabled-foreground: #9ca3af;
+
+  --color-surface: #f9fafb;
+
+  --color-surface-2: #d1d5db;
+
+  --overlay: 0, 0, 0;
+
+  --color-divider: #cbd5e1;
+  --color-border: #d1d5db;
+
+  --color-ring: #9ca3af;
+  --color-mute: #e0e0e0;
+}
+
+:root.cdk-overlay-backdrop {
+  background: rgba(var(--overlay), 0.3);
+}

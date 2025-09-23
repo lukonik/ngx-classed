@@ -15,5 +15,6 @@
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
-  }
+  },
+  "nxConsole.generateAiAgentRules": true
 }

@@ -19,6 +19,35 @@ export class AppComponent {
 
   size = model<boolean>();
 
+  buttonClasses = classed(`
+  inline-flex items-center justify-center gap-1.5
+ text-base font-semibold
+   rounded-md border border-solid
+   relative cursor-pointer
+   transition-colors duration-200
+    `)
+    .var(
+      {
+        default: `
+        border-slate-900 bg-slate-900 text-slate-50
+     hover:border-slate-800 hover:bg-slate-600
+     focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2
+      `,
+        secondary: `
+          border-slate-200 bg-slate-100 text-slate-900
+     hover:border-slate-300 hover:bg-slate-200
+     focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2
+      `,
+      destructive:`
+     border-red-500 bg-red-500 text-white
+     hover:border-red-600 hover:bg-red-600
+     focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2
+      `
+      },
+      () => this.variant()
+    )
+    .toSignal();
+
   test = classed()
     .var(
       {
