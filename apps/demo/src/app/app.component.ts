@@ -20,7 +20,9 @@ export class AppComponent {
   test = classed('text-blue-50 border border-gray-300')
     .var(
       {
-        primary: 'text-red-500',
+        default: 'text-yellow-400',
+        danger: 'text-red-500',
+        primary: 'text-blue-400',
       },
       () => this.variant()
     )

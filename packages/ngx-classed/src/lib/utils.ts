@@ -6,7 +6,7 @@ import { ClassValueType } from './classed-types';
  * @returns A string containing the class names separated by spaces.
  */
 export function coerceClassValueToString(
-  classes: ClassValueType | null | undefined
+  classes: ClassValueType
 ): string {
   if (classes == null || classes === undefined) {
     return '';

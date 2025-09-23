@@ -6,12 +6,17 @@ export class VariantResolver extends BaseResolver<string> {
     super(source);
   }
 
-  override resolve(): ClassValueType | undefined {
+  override resolve(): ClassValueType {
     const sourceValue = this.source();
-    if (sourceValue === undefined) {
-      return undefined;
+    if (sourceValue === undefined || sourceValue === null) {
+      return this._variants.default ?? null;
     }
+
     const variantValue = this._variants[sourceValue];
+    if (variantValue === undefined) {
+      return null;
+    }
+
     return variantValue;
   }
 }
