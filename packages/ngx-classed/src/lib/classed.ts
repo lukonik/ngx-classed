@@ -1,8 +1,9 @@
 import { computed } from '@angular/core';
 import { ClassValueType, ClassVariantType, SourceType } from './classed-types';
-import { coerceClassValueToString } from './utils';
 import { BaseResolver } from './resolvers/base-resolver';
+import { IifResolver } from './resolvers/iif-resolver';
 import { VariantResolver } from './resolvers/variant-resolver';
+import { coerceClassValueToString } from './utils';
 
 export class Classed {
   private _resolvers = new Set<BaseResolver<unknown>>();
@@ -10,6 +11,17 @@ export class Classed {
 
   var(variants: ClassVariantType, source: SourceType<string>) {
     this._resolvers.add(new VariantResolver(variants, source));
+    return this;
+  }
+
+  iif(
+    classes: {
+      true: ClassValueType;
+      false?: ClassValueType;
+    },
+    source: SourceType<boolean>
+  ) {
+    this._resolvers.add(new IifResolver(source, classes.true, classes.false));
     return this;
   }
 

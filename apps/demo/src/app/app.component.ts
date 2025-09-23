@@ -1,7 +1,7 @@
 import { Component, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { classed } from 'ngx-classed';
-import { FormsModule } from '@angular/forms';
 @Component({
   standalone: true,
   imports: [RouterModule, FormsModule],
@@ -17,7 +17,9 @@ export class AppComponent {
 
   variant = model<string>();
 
-  test = classed('text-blue-50 border border-gray-300')
+  size = model<boolean>();
+
+  test = classed()
     .var(
       {
         default: 'text-yellow-400',
@@ -25,6 +27,13 @@ export class AppComponent {
         primary: 'text-blue-400',
       },
       () => this.variant()
+    )
+    .iif(
+      {
+        true: 'text-7xl border border-black',
+        false: 'text-sm',
+      },
+      () => this.size()
     )
     .toSignal();
 }
