@@ -1,2 +1,8 @@
-<app-nx-welcome></app-nx-welcome>
+<h1 [class]="test()">test</h1>
+
+<select [(ngModel)]="variant">
+  <option value="primary">Primary</option>
+  <option value="danger">Danger</option>
+</select>
+
 <router-outlet></router-outlet>

@@ -1,1 +1,1 @@
-export * from './lib/ngx-classed/ngx-classed.component';
+export * from './lib/classed-factory';
