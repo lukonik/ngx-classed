@@ -1,34 +1,15 @@
 import { computed } from '@angular/core';
 import { ClassValueType, ClassVariantType, SourceType } from './classed-types';
 import { coerceClassValueToString } from './utils';
-
-abstract class SourceRegistry<T> {
-  constructor(public readonly source: SourceType<T | undefined>) {}
-
-  abstract resolve(): ClassValueType | undefined;
-}
-
-class VarianceSourceRegistry extends SourceRegistry<string> {
-  constructor(private _variants: ClassVariantType, source: SourceType<string>) {
-    super(source);
-  }
-
-  override resolve(): ClassValueType | undefined {
-    const sourceValue = this.source();
-    if (sourceValue === undefined) {
-      return undefined;
-    }
-    const variantValue = this._variants[sourceValue];
-    return variantValue;
-  }
-}
+import { BaseResolver } from './resolvers/base-resolver';
+import { VariantResolver } from './resolvers/variant-resolver';
 
 export class Classed {
-  private _registry = new Set<SourceRegistry<unknown>>();
+  private _resolvers = new Set<BaseResolver<unknown>>();
   constructor(private _classes?: ClassValueType) {}
 
   var(variants: ClassVariantType, source: SourceType<string>) {
-    this._registry.add(new VarianceSourceRegistry(variants, source));
+    this._resolvers.add(new VariantResolver(variants, source));
     return this;
   }
 
@@ -37,7 +18,7 @@ export class Classed {
     if (this._classes) {
       classes += coerceClassValueToString(this._classes) + ' ';
     }
-    for (const registry of this._registry) {
+    for (const registry of this._resolvers) {
       const resolveValue = registry.resolve();
       if (resolveValue) {
         classes += coerceClassValueToString(resolveValue) + ' ';
