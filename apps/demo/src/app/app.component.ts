@@ -29,7 +29,7 @@ export class AppComponent {
     .var(
       {
         default: `
-        border-slate-900 bg-slate-900 text-slate-50
+        border-slate-900 bg-slate-900 text-slate-50 text-red-400
      hover:border-slate-800 hover:bg-slate-600
      focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2
       `,
@@ -38,11 +38,11 @@ export class AppComponent {
      hover:border-slate-300 hover:bg-slate-200
      focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2
       `,
-      destructive:`
+        destructive: `
      border-red-500 bg-red-500 text-white
      hover:border-red-600 hover:bg-red-600
      focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2
-      `
+      `,
       },
       () => this.variant()
     )
