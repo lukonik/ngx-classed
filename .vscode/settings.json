@@ -8,12 +8,6 @@
     "node_modules": true
   },
   "tailwindCSS.classFunctions": ["classed"],
-  "tailwindCSS.experimental.classRegex": [
-    ["classed\\(([^)]*)\\)", "(?:'|\"|`)([^'\"`]+)(?:'|\"|`)"],
-    ["\\.var\\(([^)]*)\\)", "(?:'|\"|`)([^'\"`]+)(?:'|\"|`)"],
-    ["\\.iif\\(([^)]*)\\)", "(?:'|\"|`)([^'\"`]+)(?:'|\"|`)"],
-    ["\\.multiVar\\(([^)]*)\\)", "(?:'|\"|`)([^'\"`]+)(?:'|\"|`)"]
-  ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
   },

@@ -1,11 +1,11 @@
 import {
   CompoundVariantRule,
-  VariantClassMap,
+  VariantDefinitionShape,
   VariantValue,
 } from '../classed-types';
 import { coerceClassValueToString } from '../utils';
 
-export function resolveCompoundVariants<T extends VariantClassMap>(
+export function resolveCompoundVariants<T extends VariantDefinitionShape>(
   compoundVariant: CompoundVariantRule<T>,
   source: VariantValue<T>
 ): string {
