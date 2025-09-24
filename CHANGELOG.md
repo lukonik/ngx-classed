@@ -1,3 +1,13 @@
+## 0.2.0 (2025-09-24)
+
+### 🩹 Fixes
+
+- add type ([a330916](https://github.com/lukonik/ngx-classed/commit/a330916))
+
+### ❤️ Thank You
+
+- luka onik
+
 ## 0.1.0 (2025-09-23)
 
 ### 🚀 Features
