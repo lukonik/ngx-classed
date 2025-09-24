@@ -1,1 +1,1 @@
-export * from './lib/classed-factory';
+export * from './lib/classed';
