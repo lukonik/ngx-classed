@@ -27,6 +27,15 @@ const HOST_CLASSES = classed({
       true: 'opacity-70 cursor-not-allowed',
     },
   },
+  compoundVariants: [
+    {
+      variants: {
+        variant: 'secondary',
+        loading: true,
+      },
+      classes: 'text-9xl',
+    },
+  ],
   // compoundVariants: [
   //   {
   //     variants: {
