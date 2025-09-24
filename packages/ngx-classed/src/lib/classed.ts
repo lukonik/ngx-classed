@@ -1,5 +1,5 @@
 import { computed } from '@angular/core';
-import { ClassedFactoryType } from './classed-factory';
+import { ClassedOptions, VariantClassMap } from './classed-types';
 import { BaseResolver } from './resolvers/base-resolver';
 import { CompoundVariantsResolver } from './resolvers/compound-variants-resolver';
 import { VariantsResolver } from './resolvers/variants-resolver';
@@ -9,9 +9,9 @@ const RESOLVERS = {
   variant: new VariantsResolver(),
   compoundVariants: new CompoundVariantsResolver(),
 };
-export class Classed {
+export class Classed<T extends VariantClassMap> {
   private _resolvers = new Set<BaseResolver<unknown>>();
-  constructor(private _classedFactoryType: ClassedFactoryType) {}
+  constructor(private _classedFactoryType: ClassedOptions<T>) {}
 
   // var<T extends string>(
   //   variants: ClassVariantType<T>,
@@ -28,8 +28,8 @@ export class Classed {
 
   // // iif(
   // //   classes: {
-  // //     true: ClassValueType;
-  // //     false?: ClassValueType;
+  // //     true: ClassValue;
+  // //     false?: ClassValue;
   // //   },
   // //   source: SourceType<boolean>
   // // ) {

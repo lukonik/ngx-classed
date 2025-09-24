@@ -1,16 +1,14 @@
 import { booleanAttribute, Component, input } from '@angular/core';
 import { classed } from 'ngx-classed';
 
-export type VARIANT_TYPES =
-  | 'default'
-  | 'secondary'
-  | 'destructive'
-  | 'outline'
-  | 'ghost'
-  | 'link'
-  | 'icon'
-  | 'with-icon'
-  | 'loading';
+export type VARIANT_TYPES = 'default' | 'secondary';
+// | 'destructive'
+// | 'outline'
+// | 'ghost'
+// | 'link'
+// | 'icon'
+// | 'with-icon'
+// | 'loading';
 
 export type SIZE_TYPES = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -27,25 +25,17 @@ const HOST_CLASSES = classed({
     },
     loading: {
       true: 'opacity-70 cursor-not-allowed',
-      false: '',
     },
   },
-  compoundVariants: [
-    {
-      variants: {
-        size: 'sm',
-        icon: false,
-      },
-      classes: ['h-8', 'px-3', 'text-sm'],
-    },
-    {
-      variants: {
-        size: 'md',
-        icon: false,
-      },
-      classes: ['h-9', 'px-4', 'text-sm'],
-    },
-  ],
+  // compoundVariants: [
+  //   {
+  //     variants: {
+  //       variant: 'default',
+  //       loading: true,
+  //     },
+  //     classes: [],
+  //   },
+  // ],
 });
 
 @Component({
@@ -65,12 +55,26 @@ export class ButtonComponent {
   variant = input<VARIANT_TYPES>('default');
   loading = input(false, { transform: booleanAttribute });
 
-  hostClasses = HOST_CLASSES.toSignal(() => ({
+  hostClasses = HOST_CLASSES(() => ({
     variant: this.variant(),
     size: this.size(),
     icon: this.icon(),
     loading: this.loading(),
   }));
+
+  // (() => ({
+  //   variant: this.variant(),
+  //   size: this.size(),
+  //   icon: this.icon(),
+  //   loading: this.loading(),
+  // }));
+
+  hostClass = classed({
+    base: ``,
+    variants: {
+      variant: {},
+    },
+  });
 
   // hostClasses = classed(`
   //    inline-flex items-center justify-center gap-1.5

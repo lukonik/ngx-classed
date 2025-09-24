@@ -1,17 +1,20 @@
-import { Classed } from './classed';
-import { ClassValueType } from './classed-types';
+import { computed } from '@angular/core';
+import { ClassedOptions, VariantClassMap, VariantValue } from './classed-types';
+import { resolveVariants } from './resolvers/variants-resolver';
+import { coerceClassValueToString } from './utils';
 
-export type ClassVariantType = Record<string, Record<string, ClassValueType>>;
+export function classed<T extends VariantClassMap>(options: ClassedOptions<T>) {
+  return (value: () => VariantValue<T>) =>
+    computed(() => {
+      let classes = '';
 
-export interface ClassedFactoryType {
-  base?: ClassValueType;
-  variants?: Record<string, Record<string, ClassValueType>>;
-  compoundVariants?: Array<{
-    variants: Record<string, string | boolean>;
-    classes: ClassValueType;
-  }>;
-}
+      if (options.base) {
+        classes += coerceClassValueToString(options.base) + ' ';
+      }
 
-export function classed(classes: ClassedFactoryType) {
-  return new Classed(classes);
+      if (options.variants) {
+        classes += resolveVariants(options.variants, value());
+      }
+      return classes;
+    });
 }
