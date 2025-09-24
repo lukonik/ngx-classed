@@ -1,10 +1,14 @@
 import { computed } from '@angular/core';
-import { ClassedOptions, VariantClassMap, VariantValue } from './classed-types';
+import {
+  ClassedOptions,
+  VariantDefinitionShape,
+  VariantValue,
+} from './classed-types';
 import { resolveCompoundVariants } from './resolvers/compound-variants-resolver';
 import { resolveVariants } from './resolvers/variants-resolver';
 import { coerceClassValueToString } from './utils';
 
-export function classed<T extends VariantClassMap>(options: ClassedOptions<T>) {
+export function classed<T extends VariantDefinitionShape>(options: ClassedOptions<T>) {
   return (value: () => VariantValue<T>) =>
     computed(() => {
       let classes = '';

@@ -12,7 +12,12 @@ export type VARIANT_TYPES = 'default' | 'secondary';
 
 export type SIZE_TYPES = 'sm' | 'md' | 'lg' | 'xl';
 
-const HOST_CLASSES = classed({
+const HOST_CLASSES = classed<{
+  variant: VARIANT_TYPES;
+  size: SIZE_TYPES;
+  icon: boolean;
+  loading: boolean;
+}>({
   base: `  inline-flex items-center justify-center gap-1.5
    bg-transparent text-base font-semibold
    rounded-md border border-solid

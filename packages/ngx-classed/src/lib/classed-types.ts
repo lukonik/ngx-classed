@@ -1,22 +1,58 @@
-export type NormalizeBooleanLiteral<T> = T extends 'true' | 'false'
+export type NormalizeBooleanLiteral<T> = T extends
+  | 'true'
+  | 'false'
+  | true
+  | false
   ? boolean
   : T;
 
 export type ClassValue = string | string[] | null | undefined;
 
-export type VariantClassMap = Record<string, Record<string, ClassValue>>;
+export type VariantDefinitionEntry =
+  | string
+  | number
+  | boolean
+  | Record<PropertyKey, ClassValue>;
 
-export type CompoundVariantRule<T> = Array<{
-  variants: { [key in keyof T]: NormalizeBooleanLiteral<keyof T[key]> };
+export type VariantDefinitionShape = Record<string, VariantDefinitionEntry>;
+
+type VariantKeyFromBoolean = 'true' | 'false';
+
+type VariantRecordFromUnion<T> = Partial<
+  Record<Extract<T, string | number>, ClassValue>
+>;
+
+type VariantRecordFromBoolean = Partial<
+  Record<VariantKeyFromBoolean, ClassValue>
+>;
+
+type VariantEntryToClassMap<T> = T extends Record<PropertyKey, ClassValue>
+  ? T
+  : T extends boolean
+  ? VariantRecordFromBoolean
+  : VariantRecordFromUnion<T>;
+
+export type VariantClassMap<T extends VariantDefinitionShape> = {
+  [K in keyof T]?: VariantEntryToClassMap<T[K]>;
+};
+
+type VariantEntryValue<T> = T extends Record<PropertyKey, ClassValue>
+  ? keyof T
+  : T;
+
+export type VariantValue<T extends VariantDefinitionShape> = {
+  [K in keyof T]?: NormalizeBooleanLiteral<VariantEntryValue<T[K]>>;
+};
+
+export type CompoundVariantRule<T extends VariantDefinitionShape> = Array<{
+  variants: {
+    [K in keyof T]?: NormalizeBooleanLiteral<VariantEntryValue<T[K]>>;
+  };
   classes: ClassValue;
 }>;
 
-export type VariantValue<T extends VariantClassMap> = {
-  [K in keyof T]?: NormalizeBooleanLiteral<keyof T[K]>;
-};
-
-export interface ClassedOptions<T extends VariantClassMap> {
+export interface ClassedOptions<T extends VariantDefinitionShape> {
   base?: NonNullable<ClassValue>;
-  variants?: T;
+  variants?: VariantClassMap<T>;
   compoundVariants?: CompoundVariantRule<T>;
 }
