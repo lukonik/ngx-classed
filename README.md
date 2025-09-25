@@ -45,6 +45,44 @@ _Available for WebStorm 2023.1 and later_
 }
 ```
 
+## Usage
+Use `classed` function to configure set of classes, depending on different variants:
+
+```typescript
+import { classed } from 'ngx-classed';
+
+const buttonClassed = classed({
+  base: 'px-4 py-2 rounded font-medium',
+  variants: {
+    variant: {
+      primary: 'bg-blue-500 text-white',
+      secondary: 'bg-gray-200 text-gray-900'
+    },
+    size: {
+      sm: 'text-sm px-2 py-1',
+      lg: 'text-lg px-6 py-3'
+    }
+  }
+});
+```
+
+It will return a callable function that expects to pass the object with variants [key, values] that you described. The function returns a computed signal that will automatically trigger on any change of the state:
+
+```typescript
+@Component({
+  template: `<button [class]="buttonClass()">Click me</button>`
+})
+export class MyComponent {
+  @Input() variant: 'primary' | 'secondary' = 'primary';
+  @Input() size: 'sm' | 'lg' = 'sm';
+
+  buttonClass = buttonClassed(() => ({
+    variant: this.variant,
+    size: this.size
+  }));
+}
+```
+
 ## Examples
 
 ### Basic Button Component
