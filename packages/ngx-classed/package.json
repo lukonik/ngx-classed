@@ -1,6 +1,11 @@
 {
   "name": "ngx-classed",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukonik/ngx-classed.git"
+  },
+  "homepage": "https://github.com/lukonik/ngx-classed",
   "peerDependencies": {
     "@angular/core": ">=17.0.0"
   },
