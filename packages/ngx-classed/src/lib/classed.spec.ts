@@ -13,8 +13,8 @@ import { computed } from '@angular/core';
 import { classed } from './classed';
 import {
   ClassValue,
-  CompoundVariantRule,
-  VariantClassMap,
+  CompoundVariantOptions,
+  VariantOptions,
   VariantValue,
 } from './classed-types';
 import * as compoundVariantsResolver from './resolvers/compound-variants-resolver';
@@ -33,7 +33,7 @@ describe('classed', () => {
     value: Record<string, unknown>
   ): VariantValue<VariantShape> => value as unknown as VariantValue<VariantShape>;
 
-  const baseVariants: VariantClassMap<VariantShape> = {
+  const baseVariants: VariantOptions<VariantShape> = {
     color: {
       primary: 'text-blue-500',
       secondary: 'text-gray-500',
@@ -44,7 +44,7 @@ describe('classed', () => {
     },
   };
 
-  const baseCompounds: CompoundVariantRule<VariantShape> = [
+  const baseCompounds: CompoundVariantOptions<VariantShape> = [
     {
       variants: { color: 'primary', size: 'lg' },
       classes: 'primary-lg',
@@ -119,7 +119,7 @@ describe('classed', () => {
   });
 
   it('recomputes classes each time the underlying value changes', () => {
-    const compoundVariants: CompoundVariantRule<VariantShape> = [
+    const compoundVariants: CompoundVariantOptions<VariantShape> = [
       {
         variants: { size: 'lg' },
         classes: 'is-large',

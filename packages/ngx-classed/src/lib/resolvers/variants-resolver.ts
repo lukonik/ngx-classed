@@ -1,7 +1,7 @@
 import {
   ClassValue,
-  VariantClassMap,
   VariantDefinitionShape,
+  VariantOptions,
   VariantValue,
 } from '../classed-types';
 import { coerceClassValueToString } from '../utils';
@@ -15,7 +15,7 @@ function toVariantKey(value: unknown): string {
 }
 
 export function resolveVariants<T extends VariantDefinitionShape>(
-  variants: VariantClassMap<T>,
+  variants: VariantOptions<T>,
   source: VariantValue<T>
 ): string {
   let classNames = '';

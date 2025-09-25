@@ -1,6 +1,6 @@
 import {
   ClassValue,
-  CompoundVariantRule,
+  CompoundVariantOptions,
   VariantValue,
 } from '../classed-types';
 import { resolveCompoundVariants } from './compound-variants-resolver';
@@ -18,7 +18,7 @@ describe('resolveCompoundVariants', () => {
     value: Record<string, unknown>
   ): VariantValue<VariantShape> => value as unknown as VariantValue<VariantShape>;
 
-  const compoundVariants: CompoundVariantRule<VariantShape> = [
+  const compoundVariants: CompoundVariantOptions<VariantShape> = [
     {
       variants: { color: 'primary', size: 'lg' },
       classes: 'bg-blue-500 text-white',
