@@ -1,12 +1,12 @@
 import {
-  CompoundVariantRule,
+  CompoundVariantOptions,
   VariantDefinitionShape,
   VariantValue,
 } from '../classed-types';
 import { coerceClassValueToString } from '../utils';
 
 export function resolveCompoundVariants<T extends VariantDefinitionShape>(
-  compoundVariant: CompoundVariantRule<T>,
+  compoundVariant: CompoundVariantOptions<T>,
   source: VariantValue<T>
 ): string {
   let classNames = '';

@@ -1,5 +1,5 @@
+import { ClassValue, VariantOptions, VariantValue } from '../classed-types';
 import { resolveVariants } from './variants-resolver';
-import { ClassValue, VariantClassMap, VariantValue } from '../classed-types';
 
 describe('resolveVariants', () => {
   type VariantShape = {
@@ -10,7 +10,7 @@ describe('resolveVariants', () => {
     elevation: 0 | 1 | 2;
   };
 
-  const baseVariants: VariantClassMap<VariantShape> = {
+  const baseVariants: VariantOptions<VariantShape> = {
     color: {
       primary: 'text-blue-500',
       secondary: 'text-gray-500',

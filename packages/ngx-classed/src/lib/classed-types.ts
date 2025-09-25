@@ -32,7 +32,7 @@ type VariantEntryToClassMap<T> = T extends Record<PropertyKey, ClassValue>
   ? VariantRecordFromBoolean
   : VariantRecordFromUnion<T>;
 
-export type VariantClassMap<T extends VariantDefinitionShape> = {
+export type VariantOptions<T extends VariantDefinitionShape> = {
   [K in keyof T]?: VariantEntryToClassMap<T[K]>;
 };
 
@@ -44,7 +44,7 @@ export type VariantValue<T extends VariantDefinitionShape> = {
   [K in keyof T]?: NormalizeBooleanLiteral<VariantEntryValue<T[K]>>;
 };
 
-export type CompoundVariantRule<T extends VariantDefinitionShape> = Array<{
+export type CompoundVariantOptions<T extends VariantDefinitionShape> = Array<{
   variants: {
     [K in keyof T]?: NormalizeBooleanLiteral<VariantEntryValue<T[K]>>;
   };
@@ -53,6 +53,6 @@ export type CompoundVariantRule<T extends VariantDefinitionShape> = Array<{
 
 export interface ClassedOptions<T extends VariantDefinitionShape> {
   base?: NonNullable<ClassValue>;
-  variants?: VariantClassMap<T>;
-  compoundVariants?: CompoundVariantRule<T>;
+  variants?: VariantOptions<T>;
+  compoundVariants?: CompoundVariantOptions<T>;
 }
