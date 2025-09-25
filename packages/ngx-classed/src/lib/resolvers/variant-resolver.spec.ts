@@ -1,89 +1,116 @@
-import { ClassVariantType } from '../classed-types';
-import { VariantResolver } from './variant-resolver';
+import { resolveVariants } from './variants-resolver';
+import { ClassValue, VariantClassMap, VariantValue } from '../classed-types';
 
-describe('VariantResolver', () => {
-  it('returns the variant value when the source matches a key', () => {
-    const variants: ClassVariantType = {
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-    };
-    const source = jest.fn().mockReturnValue('primary');
+describe('resolveVariants', () => {
+  type VariantShape = {
+    color: Record<'primary' | 'secondary', ClassValue>;
+    size: Record<'sm' | 'lg', ClassValue>;
+    disabled: boolean;
+    spacing: Record<'compact' | 'cozy', ClassValue>;
+    elevation: 0 | 1 | 2;
+  };
 
-    const resolver = new VariantResolver(variants, source);
+  const baseVariants: VariantClassMap<VariantShape> = {
+    color: {
+      primary: 'text-blue-500',
+      secondary: 'text-gray-500',
+    },
+    size: {
+      sm: 'text-sm',
+      lg: 'text-lg',
+    },
+    disabled: {
+      true: 'opacity-50',
+      false: 'opacity-100',
+    },
+    spacing: {
+      compact: ['px-2', 'py-1'],
+      cozy: ['px-4', 'py-2'],
+    },
+    elevation: {
+      0: 'shadow-none',
+      1: 'shadow-sm',
+      2: 'shadow-md',
+    },
+  };
 
-    expect(resolver.resolve()).toBe('btn-primary');
-    expect(source).toHaveBeenCalledTimes(1);
+  const toVariantValue = (
+    value: Record<string, unknown>
+  ): VariantValue<VariantShape> => value as unknown as VariantValue<VariantShape>;
+
+  it('returns a concatenated string of classes for matching variants', () => {
+    const result = resolveVariants(baseVariants, {
+      color: 'primary',
+      size: 'lg',
+      disabled: true,
+    });
+
+    expect(result).toBe('text-blue-500 text-lg opacity-50 ');
   });
 
-  it('returns null when the source produces undefined without a default', () => {
-    const variants: ClassVariantType = {};
-    const source = jest.fn().mockReturnValue(undefined);
+  it('coerces array class values into a space-delimited string', () => {
+    const result = resolveVariants(baseVariants, {
+      spacing: 'cozy',
+    });
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBeNull();
+    expect(result).toBe('px-4 py-2 ');
   });
 
-  it('returns null when no variant matches the key and no default is provided', () => {
-    const variants: ClassVariantType = {
-      primary: 'btn-primary',
-    };
-    const source = jest.fn().mockReturnValue('danger');
+  it('ignores variant keys that are not defined in the variant map', () => {
+    const result = resolveVariants(
+      baseVariants,
+      toVariantValue({
+        color: 'secondary',
+        unknown: 'value',
+      })
+    );
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBeNull();
+    expect(result).toBe('text-gray-500 ');
   });
 
-  it('uses the default variant when the source produces undefined', () => {
-    const variants: ClassVariantType = {
-      default: 'btn-default',
-    };
-    const source = jest.fn().mockReturnValue(undefined);
+  it('ignores variant values without a matching class definition', () => {
+    const result = resolveVariants(
+      baseVariants,
+      toVariantValue({
+        size: 'xl',
+        color: 'secondary',
+      })
+    );
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBe('btn-default');
+    expect(result).toBe('text-gray-500 ');
   });
 
-  it('returns array variant values without modification', () => {
-    const arrayVariant: string[] = ['btn', 'btn-primary'];
-    const variants: ClassVariantType = {
-      primary: arrayVariant,
-    };
-    const source = jest.fn().mockReturnValue('primary');
+  it('skips null and undefined variant values', () => {
+    const result = resolveVariants(
+      baseVariants,
+      toVariantValue({
+        color: null,
+        size: undefined,
+        disabled: false,
+      })
+    );
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBe(arrayVariant);
+    expect(result).toBe('opacity-100 ');
   });
 
-  it('re-evaluates the source for each resolve call', () => {
-    let currentValue = 'primary';
-    const variants: ClassVariantType = {
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-    };
-    const source = jest.fn().mockImplementation(() => currentValue);
+  it('coerces boolean and numeric variant values to their string keys', () => {
+    const result = resolveVariants(baseVariants, {
+      disabled: false,
+      elevation: 2,
+    });
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBe('btn-primary');
-
-    currentValue = 'secondary';
-    expect(resolver.resolve()).toBe('btn-secondary');
-
-    expect(source).toHaveBeenCalledTimes(2);
+    expect(result).toBe('opacity-100 shadow-md ');
   });
 
-  it('allows using the default variant key explicitly', () => {
-    const variants: ClassVariantType = {
-      default: 'btn-default',
-    };
-    const source = jest.fn().mockReturnValue('default');
+  it('returns an empty string when no variant produced a class', () => {
+    const result = resolveVariants(
+      baseVariants,
+      toVariantValue({
+        color: null,
+        size: undefined,
+      })
+    );
 
-    const resolver = new VariantResolver(variants, source);
-
-    expect(resolver.resolve()).toBe('btn-default');
+    expect(result).toBe('');
   });
 });

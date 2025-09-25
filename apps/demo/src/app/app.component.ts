@@ -21,7 +21,10 @@ export class AppComponent {
   title = 'demo';
 
   variant = model<VARIANT_TYPES>('default');
+
+  sizes: SIZE_TYPES[] = ['sm', 'md', 'lg', 'xl'];
   size = model<SIZE_TYPES>('md');
+
   icon = model(false);
   loading = model(false);
 }

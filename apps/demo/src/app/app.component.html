@@ -1,13 +1,3 @@
-<button
-  appButton
-  size="xl"
-  [variant]="variant()"
-  [size]="size()"
-  [icon]="icon()"
-  [loading]="loading()"
->
-  This is button
-</button>
 <select [(ngModel)]="variant">
   <option>default</option>
   <option>secondary</option>
@@ -15,12 +5,23 @@
 </select>
 
 <select [(ngModel)]="size">
-  <option>sm</option>
-  <option>md</option>
-  <option>destructive</option>
+  @for (size of sizes; track $index) {
+  <option>{{ size }}</option>
+  }
 </select>
 <input type="checkbox" [(ngModel)]="icon" /> ICON
 <input type="checkbox" [(ngModel)]="loading" /> LOADING
+<div class="pt-10 mx-auto">
+  <button
+    appButton
+    [variant]="variant()"
+    [size]="size()"
+    [icon]="icon()"
+    [loading]="loading()"
+  >
+    This is button
+  </button>
+</div>
 
 <!--
 <button [class]="buttonClasses()">HELLO</button>

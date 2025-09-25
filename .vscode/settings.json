@@ -8,6 +8,20 @@
     "node_modules": true
   },
   "tailwindCSS.classFunctions": ["classed"],
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "classed(?:<[^>]+>)?\\((?:.|\\n)*?\\{",
+      "(?:base|classes)\\s*:\\s*(?:'([^']*)'|\"([^\"]*)\"|`([^`]*)`)"
+    ],
+    [
+      "classed(?:<[^>]+>)?\\((?:.|\\n)*?variants\\s*:\\s*\\{",
+      "['\"`]([^'\"`]+)['\"`]"
+    ],
+    [
+      "compoundVariants\\s*:\\s*\\[",
+      "classes\\s*:\\s*(?:'([^']*)'|\"([^\"]*)\"|`([^`]*)`)"
+    ]
+  ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
   },

@@ -1,14 +1,20 @@
-import { booleanAttribute, Component, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import { classed } from 'ngx-classed';
+import { ButtonLoaderComponent } from './button-loader.component';
 
-export type VARIANT_TYPES = 'default' | 'secondary';
-// | 'destructive'
-// | 'outline'
-// | 'ghost'
-// | 'link'
-// | 'icon'
-// | 'with-icon'
-// | 'loading';
+export type VARIANT_TYPES =
+  | 'default'
+  | 'secondary'
+  | 'destructive'
+  | 'outline'
+  | 'ghost'
+  | 'link';
 
 export type SIZE_TYPES = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -18,56 +24,110 @@ const HOST_CLASSES = classed<{
   icon: boolean;
   loading: boolean;
 }>({
-  base: `  inline-flex items-center justify-center gap-1.5
-   bg-transparent text-base font-semibold
+  base: `inline-flex items-center justify-center  gap-1.5
+   text-base font-semibold
    rounded-md border border-solid
    relative cursor-pointer
    transition-colors duration-200`,
   variants: {
     variant: {
-      default: 'bg-blue-600',
-      secondary: 'bg-red-600',
-    },
-    loading: {
-      true: 'opacity-70 cursor-not-allowed',
+      default: `
+     border-slate-900 bg-slate-900 text-slate-50
+    hover:border-slate-800 hover:bg-slate-800
+    focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2
+    [--spinner-color:theme(colors.slate.50)]
+      `,
+      secondary: '',
+      destructive: '',
+      outline: 'border-gray-300',
+      ghost: 'bg-transparent',
+      link: 'bg-transparent underline-offset-4 hover:underline',
     },
   },
   compoundVariants: [
     {
       variants: {
-        variant: 'secondary',
-        loading: true,
+        icon: true,
+        size: 'sm',
       },
-      classes: 'text-9xl',
+      classes: `h-8 w-8`,
+    },
+    {
+      variants: {
+        icon: true,
+        size: 'md',
+      },
+      classes: 'h-9 w-9',
+    },
+    {
+      variants: {
+        icon: true,
+        size: 'lg',
+      },
+      classes: 'h-10 w-10',
+    },
+    {
+      variants: {
+        icon: true,
+        size: 'xl',
+      },
+      classes: 'h-12 w-12',
+    },
+    {
+      variants: {
+        icon: false,
+        size: 'sm',
+      },
+      classes: `h-8 px-3 text-sm`,
+    },
+    {
+      variants: {
+        icon: false,
+        size: 'md',
+      },
+      classes: 'h-9 px-4 text-sm',
+    },
+    {
+      variants: {
+        icon: false,
+        size: 'lg',
+      },
+      classes: 'h-10 px-8',
+    },
+
+    {
+      variants: {
+        icon: false,
+        size: 'xl',
+      },
+      classes: 'h-12 px-10 text-lg',
     },
   ],
-  // compoundVariants: [
-  //   {
-  //     variants: {
-  //       variant: 'default',
-  //       loading: true,
-  //     },
-  //     classes: [],
-  //   },
-  // ],
 });
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[appButton]',
-  standalone: true,
-  imports: [],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
+  imports: [ButtonLoaderComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'hostClasses()',
+    '[disabled]': 'disabled()',
   },
 })
 export class ButtonComponent {
-  icon = input(false, { transform: booleanAttribute });
-  size = input<SIZE_TYPES>('md');
   variant = input<VARIANT_TYPES>('default');
-  loading = input(false, { transform: booleanAttribute });
+
+  disabled = input<boolean>();
+
+  size = input<SIZE_TYPES>('md');
+
+  icon = input(false, { transform: booleanAttribute });
+
+  loading = input<boolean>();
 
   hostClasses = HOST_CLASSES(() => ({
     variant: this.variant(),
@@ -76,90 +136,7 @@ export class ButtonComponent {
     loading: this.loading(),
   }));
 
-  // (() => ({
-  //   variant: this.variant(),
-  //   size: this.size(),
-  //   icon: this.icon(),
-  //   loading: this.loading(),
-  // }));
-
-  hostClass = classed({
-    base: ``,
-    variants: {
-      variant: {},
-    },
+  classNames = computed(() => {
+    return [`btn-${this.variant()}`, `btn-${this.size()}`];
   });
-
-  // hostClasses = classed(`
-  //    inline-flex items-center justify-center gap-1.5
-  //  bg-transparent text-base font-semibold
-  //  rounded-md border border-solid
-  //  relative cursor-pointer
-  //  transition-colors duration-200
-  // `)
-  //   .var()
-  //   .multiVar(
-  //     [
-  //       {
-  //         variants: {
-  //           size: 'sm',
-  //           icon: false,
-  //         },
-  //         classes: 'h-8 px-3 text-sm',
-  //       },
-  //       {
-  //         variants: {
-  //           size: 'md',
-  //           icon: false,
-  //         },
-  //         classes: 'h-9 px-4 text-sm',
-  //       },
-  //       {
-  //         variants: {
-  //           size: 'lg',
-  //           icon: false,
-  //         },
-  //         classes: 'h-10 px-8',
-  //       },
-  //       {
-  //         variants: {
-  //           size: 'xl',
-  //           icon: false,
-  //         },
-  //         classes: 'h-12 px-10 text-lg',
-  //       },
-
-  //       {
-  //         variants: {
-  //           size: 'sm',
-  //           icon: true,
-  //         },
-  //         classes: 'h-8 w-8',
-  //       },
-  //       {
-  //         variants: {
-  //           size: 'md',
-  //           icon: true,
-  //         },
-  //         classes: 'h-9 w-9',
-  //       },
-
-  //       {
-  //         variants: {
-  //           size: 'lg',
-  //           icon: true,
-  //         },
-  //         classes: 'h-10 w-10',
-  //       },
-  //       {
-  //         variants: {
-  //           size: 'xl',
-  //           icon: true,
-  //         },
-  //         classes: 'h-12 w-12',
-  //       },
-  //     ],
-  //     () => ({ size: this.size(), icon: this.icon() })
-  //   )
-  //   .toSignal();
 }
