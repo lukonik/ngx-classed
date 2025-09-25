@@ -6,7 +6,7 @@
 
 ✨ **Key Features:**
 
-- 🔒 **Type-safe**: Full TypeScript support with intelligent autocomplete
+- 🔒 **Type-safe**: Full TypeScript support and TailwindCSS intelissense
 - ⚡ **Angular Signals**: Built on Angular's reactive computed signals
 - 🎨 **Variant-based**: Define multiple styling variants with ease
 - 🧩 **Compound Variants**: Handle complex styling combinations
@@ -77,8 +77,8 @@ export class ButtonComponent {
   });
 
   buttonClass = this.buttonClassed(() => ({
-    variant: this.variant,
-    size: this.size,
+    variant: this.variant(),
+    size: this.size(),
   }));
 }
 ```
@@ -148,105 +148,17 @@ export class CardComponent {
   });
 
   cardClass = this.cardClassed(() => ({
-    variant: this.variant,
-    elevated: this.elevated,
-    interactive: this.interactive,
+    variant: this.variant(),
+    elevated: this.elevated(),
+    interactive: this.interactive(),
   }));
 
   titleClass = this.titleClassed(() => ({
-    variant: this.variant,
+    variant: this.variant(),
   }));
 }
 ```
 
-### Alert Component with Multiple States
-
-```typescript
-import { Component, Input } from '@angular/core';
-import { classed } from 'ngx-classed';
-
-@Component({
-  selector: 'app-alert',
-  template: `
-    <div [class]="alertClass()">
-      <div [class]="iconClass()">{{ icon }}</div>
-      <div>
-        <h4 [class]="titleClass()">{{ title }}</h4>
-        <p [class]="messageClass()">{{ message }}</p>
-      </div>
-    </div>
-  `,
-})
-export class AlertComponent {
-  @Input() type: 'success' | 'warning' | 'error' | 'info' = 'info';
-  @Input() title = '';
-  @Input() message = '';
-  @Input() dismissible = false;
-
-  get icon() {
-    const icons = {
-      success: '✅',
-      warning: '⚠️',
-      error: '❌',
-      info: 'ℹ️',
-    };
-    return icons[this.type];
-  }
-
-  private alertClassed = classed({
-    base: 'p-4 rounded-md border-l-4 flex gap-3',
-    variants: {
-      type: {
-        success: 'bg-green-50 border-green-400',
-        warning: 'bg-yellow-50 border-yellow-400',
-        error: 'bg-red-50 border-red-400',
-        info: 'bg-blue-50 border-blue-400',
-      },
-      dismissible: {
-        true: 'pr-12 relative',
-        false: '',
-      },
-    },
-  });
-
-  private titleClassed = classed({
-    base: 'font-medium text-sm',
-    variants: {
-      type: {
-        success: 'text-green-800',
-        warning: 'text-yellow-800',
-        error: 'text-red-800',
-        info: 'text-blue-800',
-      },
-    },
-  });
-
-  private messageClassed = classed({
-    base: 'text-sm mt-1',
-    variants: {
-      type: {
-        success: 'text-green-700',
-        warning: 'text-yellow-700',
-        error: 'text-red-700',
-        info: 'text-blue-700',
-      },
-    },
-  });
-
-  private iconClassed = classed({
-    base: 'text-lg flex-shrink-0',
-  });
-
-  alertClass = this.alertClassed(() => ({
-    type: this.type,
-    dismissible: this.dismissible,
-  }));
-
-  titleClass = this.titleClassed(() => ({ type: this.type }));
-  messageClass = this.messageClassed(() => ({ type: this.type }));
-  iconClass = this.iconClassed(() => ({}));
-}
-```
 
 ### Reusable Button Styles
 
