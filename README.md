@@ -13,7 +13,7 @@
 - 📦 **Zero Dependencies**: Lightweight with no external dependencies
 
 ## Installation
-
+**supports >= Angular@17**
 ```bash
 npm install ngx-classed
 ```
