@@ -1,7 +1,5 @@
 ![NPM Version](https://img.shields.io/npm/v/ngx-classed)
 
-# NgxClassed ✨
-
 `ngx-classed` library allows you to dynamically add or remove classes based on state. It especially perfectly suits frameworks like Tailwind where you have utility classes and need to apply them based on some states.
 
 ✨ **Key Features:**
