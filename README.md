@@ -6,10 +6,12 @@
 
 ✨ **Key Features:**
 
-- 🔒 **Type-safe**: Full TypeScript support and TailwindCSS intelissense
+- 🔒 **Type-safe**: Full TypeScript support
 - ⚡ **Angular Signals**: Built on Angular's reactive computed signals
 - 🎨 **Variant-based**: Define multiple styling variants with ease
 - 🧩 **Compound Variants**: Handle complex styling combinations
+- 🧠 **TailwindCSS IntelliSense**: Full IDE support with autocomplete and syntax highlighting
+- 🌐 **SSR Compatible**: Works seamlessly with server-side rendering
 - 📦 **Zero Dependencies**: Lightweight with no external dependencies
 
 ## Installation
