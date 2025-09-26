@@ -30,7 +30,7 @@ Add this configuration to your `.vscode/settings.json`:
 
 ```json
 {
-  "tailwindCSS.experimental.classRegex": [["classed(?:<[^>]+>)?\\(([^)]*)\\)", "[\"'`]([^\"'`]*)[\"'`]"]]
+  "tailwindCSS.classFunctions": ["classed"]
 }
 ```
 
@@ -43,7 +43,7 @@ _Available for WebStorm 2023.1 and later_
 
 ```json
 {
-  "classFunctions": ["classed", "cx"]
+  "classFunctions": ["classed"]
 }
 ```
 
