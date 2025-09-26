@@ -94,8 +94,8 @@ export class MyComponent {
   @Input() size: 'sm' | 'lg' = 'sm';
 
   buttonClass = buttonClassed(() => ({
-    variant: this.variant,
-    size: this.size,
+    variant: this.variant(),
+    size: this.size(),
   }));
 }
 ```
@@ -260,7 +260,7 @@ export class SaveButtonComponent {
   buttonClass = buttonClassed(() => ({
     variant: 'primary' as const,
     size: 'md' as const,
-    disabled: this.loading,
+    disabled: this.loading(),
   }));
 
   onSave() {
