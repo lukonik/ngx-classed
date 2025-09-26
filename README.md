@@ -90,8 +90,8 @@ It will return a callable function that expects to pass the object with variants
   template: `<button [class]="buttonClass()">Click me</button>`,
 })
 export class MyComponent {
-  @Input() variant: 'primary' | 'secondary' = 'primary';
-  @Input() size: 'sm' | 'lg' = 'sm';
+  variant = input<'primary' | 'secondary'>('primary');
+  size = input<'sm' | 'lg'>('sm');
 
   buttonClass = buttonClassed(() => ({
     variant: this.variant(),
@@ -105,7 +105,7 @@ export class MyComponent {
 ### Basic Button Component
 
 ```typescript
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { classed } from 'ngx-classed';
 
 @Component({
@@ -113,8 +113,8 @@ import { classed } from 'ngx-classed';
   template: `<button [class]="buttonClass()"><ng-content></ng-content></button>`,
 })
 export class ButtonComponent {
-  @Input() variant: 'primary' | 'secondary' = 'primary';
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  variant = input<'primary' | 'secondary'>('primary');
+  size = input<'sm' | 'md' | 'lg'>('md');
 
   private buttonClassed = classed({
     base: 'font-medium rounded-lg transition-colors',
@@ -141,24 +141,24 @@ export class ButtonComponent {
 ### Card Component with Compound Variants
 
 ```typescript
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { classed } from 'ngx-classed';
 
 @Component({
   selector: 'app-card',
   template: `
     <div [class]="cardClass()">
-      <h3 [class]="titleClass()">{{ title }}</h3>
-      <p>{{ content }}</p>
+      <h3 [class]="titleClass()">{{ title() }}</h3>
+      <p>{{ content() }}</p>
     </div>
   `,
 })
 export class CardComponent {
-  @Input() title = '';
-  @Input() content = '';
-  @Input() variant: 'default' | 'primary' | 'danger' = 'default';
-  @Input() elevated = false;
-  @Input() interactive = false;
+  title = input<string>('');
+  content = input<string>('');
+  variant = input<'default' | 'primary' | 'danger'>('default');
+  elevated = input<boolean>(false);
+  interactive = input<boolean>(false);
 
   private cardClassed = classed({
     base: 'rounded-lg p-6 border transition-all',
@@ -255,7 +255,7 @@ export const buttonClassed = classed({
   template: `<button [class]="buttonClass()" (click)="onSave()">Save</button>`,
 })
 export class SaveButtonComponent {
-  @Input() loading = false;
+  loading = input<boolean>(false);
 
   buttonClass = buttonClassed(() => ({
     variant: 'primary' as const,
